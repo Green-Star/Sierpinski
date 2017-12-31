@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include "bitmap.h"
 
 #define NO_CHAR ' '
 #define IS_CHAR 'O'

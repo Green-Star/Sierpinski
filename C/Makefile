@@ -2,7 +2,7 @@ OBJDIR=./obj
 BINDIR=./bin
 HEADDIR=./inc
 _HEADERS=$(ls ($HEADDIR)/*)
-_OBJS=sierpinski.o
+_OBJS=sierpinski.o bitmap.o
 
 CC=gcc
 CFLAGS=-Wall -I$(HEADDIR)
