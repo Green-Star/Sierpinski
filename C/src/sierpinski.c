@@ -2,9 +2,6 @@
 #include <stdio.h>
 #include "bitmap.h"
 
-#define NO_CHAR ' '
-#define IS_CHAR 'O'
-
 /* From https://stackoverflow.com/questions/101439/the-most-efficient-way-to-implement-an-integer-based-power-function-powint-int */
 static int ipow(int base, int exp)
 {
@@ -20,12 +17,12 @@ static int ipow(int base, int exp)
     return result;
 }
 
-static inline char get_sierpinski_char(char current, char above) {
-  return (above == NO_CHAR) ? NO_CHAR : current;
+static inline bool is_sierpinski_pixel(bool current, bool above) {
+  return (above == false) ? false : current;
 }
 
-void do_sierpinski(int level, int depth, char c) {
-  char carpet[9] = {IS_CHAR, IS_CHAR, IS_CHAR, IS_CHAR, NO_CHAR, IS_CHAR, IS_CHAR, IS_CHAR, IS_CHAR};
+void do_sierpinski(int level, int depth, bool b) {
+  char carpet[9] = {true, true, true, true, false, true, true, true, true};
   int i;
 
   for (i = 0; i < 9; i++) {
@@ -33,11 +30,11 @@ void do_sierpinski(int level, int depth, char c) {
       if (i == 0 || i == 3 || i == 6) {
 	printf("|\n");
       }
-      printf("%c", get_sierpinski_char(carpet[i], c));
+      printf("%c", (is_sierpinski_pixel(carpet[i], b)) ? 'X' : ' ');
       continue;
     }
 
-    do_sierpinski(level + 1, depth, get_sierpinski_char(carpet[i], c));
+    do_sierpinski(level + 1, depth, is_sierpinski_pixel(carpet[i], b));
   }
 }
 
@@ -48,7 +45,7 @@ int main(int argc, char **argv) {
   int nb_pixels;
 
   if (argc < 3) {
-    fprintf(stderr, "Usage : %s <image_name> <depth>\n", argv[0]);
+    fprintf(stderr, "Usage : %s <path/to/output/image> <depth>\n", argv[0]);
     return EXIT_FAILURE;
   }
 
@@ -61,7 +58,7 @@ int main(int argc, char **argv) {
   bmp_start(argv[1], nb_pixels, nb_pixels, &file);
 
   if (depth > 0) {
-    do_sierpinski(1, depth, IS_CHAR);
+    do_sierpinski(1, depth, true);
     printf("\n");
   }
 
