@@ -12,7 +12,7 @@ bool bmp_start(char *file_path, int width, int height, struct bmp_file *bmp_file
 
   /* See https://en.wikipedia.org/wiki/BMP_file_format#Pixel_storage */
   char bits_per_pixel = 24;
-  int aligned_width = ((bits_per_pixel * width + 31) / 32) * 4;
+  int aligned_width = ((bits_per_pixel * width + 31) >>5 ) <<2;
   uint32_t pixel_data_size = aligned_width * height;
 
   /** PHYSICAL FILE **/
