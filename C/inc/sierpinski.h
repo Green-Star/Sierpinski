@@ -22,6 +22,30 @@ static inline int ipow(int base, int exp)
 /*
    Check if the pixel (x,y) is a sierpinski pixel
 
+   At the some point of the Sierpinski, we will have a structure
+   that looks like this:
+   ABC
+   D*F
+   GHI
+   (where * is a Sierpinksi pixel).
+
+   When going one level deeper, this struct will be expanded to
+   AAA BBB CCC                                      AAA BBB CCC
+   AAA BBB CCC                                      A-A B-B C-C
+   AAA BBB CCC                                      AAA BBB CCC
+   DDD *** FFF afterwards, each square center pixel DDD *** FFF
+   DDD *** FFF will be replaced as a Sierpinski     D-D *** F-F
+   DDD *** FFF pixel, which lead to the struct 2 :  DDD *** FFF
+   GGG HHH III                                      GGG HHH III
+   GGG HHH III                                      G-G H-H I-I
+   GGG HHH III                                      GGG HHH III
+   (where * and - both represents Sierpinski pixels)
+
+   When searching for Sierpinksi pixels, we start from the struct 2.
+   It means, we have to check if the current pixel is in the center
+   of a square (- in the struct 2) BUT ALSO if it was in the center
+   of a square in the previous level (i.e. the * pixels).
+
    Return true if the pixel is a sierpinksi pixel
           false if not
 */
