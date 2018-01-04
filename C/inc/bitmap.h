@@ -36,7 +36,7 @@ struct bmp_file {
   char padding_type;
 };
 
-/* Order id BGR because pixels are written in little-endian order (so BGR for RGB) */
+/* Order is BGR because pixels are written in little-endian order (so BGR for RGB) */
 struct bmp_pixel {
   char b;
   char g;
