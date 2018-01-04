@@ -1,3 +1,4 @@
+SRCDIR=./src
 OBJDIR=./obj
 BINDIR=./bin
 HEADDIR=./inc
@@ -12,7 +13,7 @@ all: $(BINDIR)/sierpinski
 HEADERS=$(patsubst %,$(HEADDIR)/%,$(_HEADERS))
 OBJS=$(patsubst %,$(OBJDIR)/%,$(_OBJS))
 
-$(OBJDIR)/%.o: src/%.c $(HEADERS)
+$(OBJDIR)/%.o: $(SRCDIR)/%.c $(HEADERS)
 	$(CC) -c $(CFLAGS) $< -o $@
 
 $(BINDIR)/sierpinski: $(OBJS)
