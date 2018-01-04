@@ -2,7 +2,7 @@
 
 binaries=( "./C/bin/sierpinski" )
 args=( "./image-test.bmp 6" )
-iterations=10
+iterations=10000
 benchmark_bin=./do_benchmark;
 
 if [ ! -f $benchmark_bin ]; then
@@ -20,6 +20,9 @@ do
     current_time=;
     total_time=0.0;
 
+    percent=;
+    current_percent=0;
+    
     exe=${binaries[$i]};
     arg=${args[$i]};
     echo "Benchmarking: $exe $arg";
@@ -35,7 +38,14 @@ do
 	fi
 	total_time=$(echo "$total_time+$current_time" | bc -l);
 	(( counter++ ))
+	
+	percent=$(echo "scale=1; $counter/$iterations*100" | bc -l)
+	if [ ! $percent == $current_percent ]; then
+	    current_percent=$percent;
+	    echo -n ".";
+	fi
     done
+    echo " Done";
     avg=$(echo "scale=6; $total_time/$iterations" | bc -l)
     # Prepend 0 if needed
     if [[ $avg == .* ]]; then
