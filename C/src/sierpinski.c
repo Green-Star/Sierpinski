@@ -4,22 +4,22 @@ int main(int argc, char **argv) {
   struct bmp_file file;
   struct bmp_pixel sierpinski_pixel, background_pixel;
   int x, y;
-  int depth;
+  int iterations;
   int nb_pixels;
 
   if (argc < 3) {
-    fprintf(stderr, "Usage : %s <path/to/output/image> <depth>\n", argv[0]);
+    fprintf(stderr, "Usage : %s <path/to/output/image> <iterations>\n", argv[0]);
     return EXIT_FAILURE;
   }
 
   sierpinski_pixel.r = sierpinski_pixel.g = sierpinski_pixel.b = 0;
   background_pixel.r = background_pixel.g = background_pixel.b = 255;
 
-  depth = strtol(argv[2], NULL, 10);
-  nb_pixels = ipow(3, depth);
+  iterations = strtol(argv[2], NULL, 10);
+  nb_pixels = ipow(3, iterations);
 
-  if (depth < 0) {
-    fprintf(stderr, "Abort: depth < 0\n");
+  if (iterations < 0) {
+    fprintf(stderr, "Abort: iterations < 0\n");
     return EXIT_FAILURE;
   }
 
