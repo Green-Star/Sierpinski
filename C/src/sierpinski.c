@@ -1,8 +1,31 @@
 #include "sierpinski.h"
 
-int main(int argc, char **argv) {
+static inline void get_pixel_color(char *argv, struct bmp_pixel *pixel, unsigned char default_value) {
+  if (argv == NULL) {
+    pixel->r = pixel->g = pixel->b = default_value;
+    return;
+  }
+  sscanf(argv, "%2hhx%2hhx%2hhx", &(pixel->r), &(pixel->g), &(pixel->b));
+}
+
+static inline void get_pixels_colors(int argc, char **argv, struct bmp_pixel *background_pixel, struct bmp_pixel *sierpinski_pixel) {
+  char *argv_sierpinski = NULL;
+  char *argv_background = NULL;
+
+  if (argc >= 6) {
+      argv_background = argv[4];
+      argv_sierpinski = argv[5];
+  } else if (argc == 5) {
+      argv_background = argv[4];
+  }
+
+  get_pixel_color(argv_background, background_pixel, 0xff);
+  get_pixel_color(argv_sierpinski, sierpinski_pixel, 0x00);
+}
+
+int main(int argc, char **argv, char **envp) {
   struct bmp_file file;
-  struct bmp_pixel sierpinski_pixel, background_pixel;
+  struct bmp_pixel background_pixel, sierpinski_pixel;
   int x, y;
   int iterations;
   int nb_pixels;
@@ -12,8 +35,7 @@ int main(int argc, char **argv) {
     return EXIT_FAILURE;
   }
 
-  sierpinski_pixel.r = sierpinski_pixel.g = sierpinski_pixel.b = 0;
-  background_pixel.r = background_pixel.g = background_pixel.b = 255;
+  get_pixels_colors(argc, argv, &background_pixel, &sierpinski_pixel);
 
   iterations = strtol(argv[2], NULL, 10);
   nb_pixels = ipow(3, iterations);

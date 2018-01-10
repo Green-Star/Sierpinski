@@ -38,9 +38,9 @@ struct bmp_file {
 
 /* Order is BGR because pixels are written in little-endian order (so BGR for RGB) */
 struct bmp_pixel {
-  char b;
-  char g;
-  char r;
+  unsigned char b;
+  unsigned char g;
+  unsigned char r;
 };
 
 bool bmp_start(char *file_path, int width, int height, struct bmp_file *bmp_file);
