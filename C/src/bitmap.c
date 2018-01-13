@@ -90,7 +90,7 @@ bool bmp_start(char *file_path, int width, int height, struct bmp_file *bmp_file
   return true;
 }
 
-bool bmp_write_pixel(struct bmp_file *bmp_file, struct bmp_pixel pixel, double coeff) {
+bool bmp_write_pixel(struct bmp_file *bmp_file, struct bmp_pixel pixel) {
   size_t result;
 
   result = fwrite((void*)&pixel, sizeof(pixel), 1, bmp_file->file);

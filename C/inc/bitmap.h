@@ -5,6 +5,8 @@
 #include <stdbool.h>
 #include <stdint.h>
 
+#include "pixel.h"
+
 /* We need to pack the structure to avoid field padding on the magic number */
 struct __attribute__((__packed__)) bmp_file_header {
   uint16_t magic_number; /* "BM" */
@@ -36,13 +38,6 @@ struct bmp_file {
   char padding_type;
 };
 
-/* Order is BGR because pixels are written in little-endian order (so BGR for RGB) */
-struct bmp_pixel {
-  unsigned char b;
-  unsigned char g;
-  unsigned char r;
-};
-
 bool bmp_start(char *file_path, int width, int height, struct bmp_file *bmp_file);
-bool bmp_write_pixel(struct bmp_file *bmp_file, struct bmp_pixel pixel, double coeff);
+bool bmp_write_pixel(struct bmp_file *bmp_file, struct bmp_pixel pixel);
 bool bmp_end(struct bmp_file bmp_file);
