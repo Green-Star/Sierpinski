@@ -44,5 +44,5 @@ struct bmp_pixel {
 };
 
 bool bmp_start(char *file_path, int width, int height, struct bmp_file *bmp_file);
-bool bmp_write_pixel(struct bmp_file *bmp_file, struct bmp_pixel pixel);
+bool bmp_write_pixel(struct bmp_file *bmp_file, struct bmp_pixel pixel, double coeff);
 bool bmp_end(struct bmp_file bmp_file);
